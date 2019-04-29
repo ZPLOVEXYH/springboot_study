@@ -18,6 +18,7 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapt
 public class SpringbootStudyApplication extends RepositoryRestConfigurerAdapter {
 
     public static void main(String[] args) {
+//        System.setProperty("server.servlet.context-path", "/baeldung");
         SpringApplication.run(SpringbootStudyApplication.class, args);
     }
 

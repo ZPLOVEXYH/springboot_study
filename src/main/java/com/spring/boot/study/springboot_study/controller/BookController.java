@@ -1,16 +1,19 @@
 package com.spring.boot.study.springboot_study.controller;
 
 import com.spring.boot.study.springboot_study.bean.Book;
+import com.spring.boot.study.springboot_study.config.ConfigProperties;
+import com.spring.boot.study.springboot_study.config.MailPropertiesConfig;
 import com.spring.boot.study.springboot_study.exception.BookNotFoundException;
 import com.spring.boot.study.springboot_study.repository.BookRepository;
 import com.spring.boot.study.springboot_study.service.BookService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.border.TitledBorder;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/books")
 public class BookController {
@@ -20,6 +23,12 @@ public class BookController {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    MailPropertiesConfig mailPropertiesConfig;
+
+    @Autowired
+    ConfigProperties configProperties;
 
     /**
      * 查询所有的数据
@@ -36,6 +45,7 @@ public class BookController {
 
     @GetMapping("/{id}")
     public Book findOne(@PathVariable(name = "id") long id) {
+        log.info("configProperties======, {}", configProperties);
         return bookRepository.findById(id)
                 .orElseThrow(BookNotFoundException::new);
     }
