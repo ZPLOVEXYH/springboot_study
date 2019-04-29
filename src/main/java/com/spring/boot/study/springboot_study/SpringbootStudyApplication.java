@@ -1,10 +1,10 @@
 package com.spring.boot.study.springboot_study;
 
-import com.spring.boot.study.springboot_study.validator.BookValidator;
+import com.spring.boot.study.springboot_study.servlet.HelloWorldServlet;
+import com.spring.boot.study.springboot_study.servlet.SpringHelloServletRegistrationBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.rest.core.event.ValidatingRepositoryEventListener;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
 
 /**
@@ -29,8 +29,17 @@ public class SpringbootStudyApplication extends RepositoryRestConfigurerAdapter 
 //        return new BookValidator();
 //    }
 
-    @Override
-    public void configureValidatingRepositoryEventListener(ValidatingRepositoryEventListener v) {
-        v.addValidator("beforeCreate", new BookValidator());
+//    @Override
+//    public void configureValidatingRepositoryEventListener(ValidatingRepositoryEventListener v) {
+//        v.addValidator("beforeCreate", new BookValidator());
+//    }
+
+    @Bean
+    public SpringHelloServletRegistrationBean servletRegistrationBean() {
+        SpringHelloServletRegistrationBean springHelloServletRegistrationBean = new SpringHelloServletRegistrationBean(new HelloWorldServlet(), "/springHelloWorld/*");
+        springHelloServletRegistrationBean.setLoadOnStartup(1);
+        springHelloServletRegistrationBean.addInitParameter("message", "SpringHelloWorldServlet special message");
+
+        return springHelloServletRegistrationBean;
     }
 }

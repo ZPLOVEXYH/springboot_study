@@ -1,26 +1,24 @@
 package com.spring.boot.study.springboot_study;
 
-import com.spring.boot.study.springboot_study.bean.Book;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import javax.xml.ws.Response;
-import java.util.Random;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest
 public class SpringbootStudyApplicationTests {
 
-    private final static String API_ROOT = "http://localhost:8081/api/books";
+    @Autowired
+    WebApplicationContext webApplicationContext;
 
-    private Book createRandomBook() {
-        Book book = new Book();
-        book.setTitle(new Random().toString());
-        book.setAuthor(new Random().toString());
+    private MockMvc mockMvc;
 
-        return book;
+    @Test
+    public void test1(){
+        
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.border.TitledBorder;
 import java.util.List;
 
 @RestController
@@ -50,5 +51,10 @@ public class BookController {
         bookRepository.findById(id)
                 .orElseThrow(BookNotFoundException::new);
         bookRepository.deleteById(id);
+    }
+
+    @GetMapping("/queryByAuthor/{title}")
+    public List<Book> queryByAuthor(@PathVariable("title") String title){
+        return bookRepository.findByAuthor(title);
     }
 }
