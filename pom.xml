@@ -15,6 +15,7 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
+        <!--<start-class>com.spring.boot.study.springboot_study.SpringbootApplication</start-class>-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
     </properties>
@@ -83,6 +84,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <!--<configuration>
+                    <mainClass>com.spring.boot.study.springboot_study.SpringbootStudyApplication</mainClass>
+                </configuration>-->
             </plugin>
         </plugins>
     </build>

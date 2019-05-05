@@ -1,11 +1,19 @@
 package com.spring.boot.study.springboot_study;
 
+import com.spring.boot.study.springboot_study.filter.RequestResponseLoggingFilter;
+import com.spring.boot.study.springboot_study.filter.TransactionFilter;
 import com.spring.boot.study.springboot_study.servlet.HelloWorldServlet;
 import com.spring.boot.study.springboot_study.servlet.SpringHelloServletRegistrationBean;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @EnableJpaRepositories扫描指定的包以获取存储库
@@ -15,6 +23,7 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapt
 //@EnableJpaRepositories("com.spring.boot.study.springboot_study.repository")
 //@EntityScan("com.spring.boot.study.springboot_study.bean")
 @SpringBootApplication
+@EnableAutoConfiguration(exclude = {ErrorMvcAutoConfiguration.class})
 public class SpringbootStudyApplication extends RepositoryRestConfigurerAdapter {
 
     public static void main(String[] args) {
@@ -42,5 +51,24 @@ public class SpringbootStudyApplication extends RepositoryRestConfigurerAdapter 
         springHelloServletRegistrationBean.addInitParameter("message", "SpringHelloWorldServlet special message");
 
         return springHelloServletRegistrationBean;
+    }
+
+    @Bean
+    public FilterRegistrationBean<TransactionFilter> transactionFilter(){
+        String[] urlStr = new String[]{"/api/books/*" ,"/simple/*"};
+        FilterRegistrationBean<TransactionFilter> filterFilterRegistrationBean = new FilterRegistrationBean<>();
+        filterFilterRegistrationBean.setFilter(new TransactionFilter());
+        filterFilterRegistrationBean.addUrlPatterns(urlStr);
+
+        return filterFilterRegistrationBean;
+    }
+
+    @Bean
+    public FilterRegistrationBean<RequestResponseLoggingFilter> requestResponseLoggingFilter(){
+        FilterRegistrationBean<RequestResponseLoggingFilter> filterFilterRegistrationBean = new FilterRegistrationBean<>();
+        filterFilterRegistrationBean.setFilter(new RequestResponseLoggingFilter());
+        filterFilterRegistrationBean.addUrlPatterns("/simple/*");
+
+        return filterFilterRegistrationBean;
     }
 }

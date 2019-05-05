@@ -16,6 +16,6 @@ public class SimpleController {
     public String pageHome(Model model){
         model.addAttribute("appName", appName);
 
-        return "home";
+        return "error";
     }
 }
