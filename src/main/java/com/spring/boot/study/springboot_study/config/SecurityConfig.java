@@ -2,6 +2,7 @@ package com.spring.boot.study.springboot_study.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -21,11 +22,25 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+            .inMemoryAuthentication()
+            .withUser("user")
+            .password("111111")
+            .roles("USER")
+            .and()
+            .withUser("user")
+            .password("111111")
+            .roles("USER", "ADMIN");
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
-        log.info("进入安全配置", http);
-        http.authorizeRequests()
-                .anyRequest()
-                .permitAll()
-                .and().csrf().disable();
+        http
+            .authorizeRequests()
+            .anyRequest()
+            .authenticated()
+            .and()
+            .httpBasic();
     }
 }
